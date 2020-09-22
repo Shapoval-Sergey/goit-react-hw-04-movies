@@ -1,5 +1,6 @@
 const apiKey = "a874a20001c1a2b686b34f1eba843c8d";
 const baseURL = "https://api.themoviedb.org/3/";
+const page = 1;
 
 const fetchMovieDetails = (movie_id) => {
   return fetch(`${baseURL}movie/${movie_id}?api_key=${apiKey}`).then((res) =>
@@ -14,11 +15,9 @@ const fetchMovieWithQuery = (searchQuery) => {
 };
 
 const fetchHomePageMovies = () => {
-  return fetch(`${baseURL}trending/all/day?api_key=${apiKey}`)
+  return fetch(`${baseURL}trending/movie/day?api_key=${apiKey}&page=${page}`)
     .then((res) => res.json())
-    .then(({ results }) =>
-      results.map((result) => result.title || result.name)
-    );
+    .then(({ results }) => results);
 };
 
 export default { fetchMovieDetails, fetchMovieWithQuery, fetchHomePageMovies };
