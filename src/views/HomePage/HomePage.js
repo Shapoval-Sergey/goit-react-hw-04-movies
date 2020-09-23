@@ -21,7 +21,7 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { isLoader, movies } = this.state;
+    const { isLoader, movies, error } = this.state;
 
     return (
       <>
@@ -32,6 +32,8 @@ export default class HomePage extends Component {
             <Loader type="Oval" color="#00BFFF" height={70} width={100} />
           </div>
         )}
+
+        {error && <p>Whoops, something went wrong: {error.message}</p>}
 
         {movies && <MoviesList movies={movies} {...this.props} />}
 

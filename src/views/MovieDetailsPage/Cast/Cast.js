@@ -1,5 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
+import Loader from "react-loader-spinner";
 
-const Cast = () => <div></div>;
-
-export default Cast;
+export default class Cast extends Component {
+  render() {
+    return <div>HELLO WORLD</div>;
+  }
+}
