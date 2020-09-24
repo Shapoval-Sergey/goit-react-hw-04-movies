@@ -8,24 +8,35 @@ import Searchbox from "../../components/Searchbox/Searchbox";
 export default class MoviesPage extends Component {
   state = {
     movies: [],
+    isLoader: false,
+    error: null,
   };
 
   componentDidMount() {
     moviesApi.fetchMovieWithQuery("cat").then((movies) => {
-      this.setState({ movies });
-      console.log(this.state.movies);
+      this.setState({ movies })
+        .catch((error) => this.setState({ error }))
+        .finally(() => this.setState({ isLoader: false }));
     });
   }
 
   componentDidUpdate() {}
 
   render() {
-    const { movies } = this.state;
+    const { movies, isLoader, error } = this.state;
     const { match } = this.props;
 
     return (
       <>
         <Searchbox onSubmit={this.handleChangeQuery} />
+
+        {error && <p>Whoops, something went wrong: {error.message}</p>}
+
+        {isLoader && (
+          <div>
+            <Loader type="Oval" color="#00BFFF" height={70} width={100} />
+          </div>
+        )}
 
         {movies.length > 0 && (
           <ul>

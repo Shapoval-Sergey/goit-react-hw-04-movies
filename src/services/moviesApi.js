@@ -20,4 +20,22 @@ const fetchHomePageMovies = () => {
     .then(({ results }) => results);
 };
 
-export default { fetchMovieDetails, fetchMovieWithQuery, fetchHomePageMovies };
+const fetchReviews = (id) => {
+  return fetch(`${baseURL}movie/${id}/reviews?api_key=${apiKey}`)
+    .then((res) => res.json())
+    .then(({ results }) => results);
+};
+
+const fetchCast = (id) => {
+  return fetch(`${baseURL}movie/${id}/credits?api_key=${apiKey}`)
+    .then((res) => res.json())
+    .then(({ cast }) => cast);
+};
+
+export default {
+  fetchMovieDetails,
+  fetchMovieWithQuery,
+  fetchHomePageMovies,
+  fetchReviews,
+  fetchCast,
+};
