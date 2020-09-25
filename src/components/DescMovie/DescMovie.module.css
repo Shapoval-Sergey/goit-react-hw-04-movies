@@ -1,0 +1,38 @@
+.descMovie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  & p {
+    margin-bottom: 22px;
+  }
+}
+
+.img {
+  width: 250px;
+}
+
+.wrapperDetails {
+  width: 63%;
+  font-size: 14px;
+}
+
+.detailsTitle {
+  margin-bottom: 7px;
+  font-size: 20px;
+}
+
+.mainTitle {
+  font-size: 28px;
+}
+
+.genresMovie {
+  display: flex;
+
+  & li {
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

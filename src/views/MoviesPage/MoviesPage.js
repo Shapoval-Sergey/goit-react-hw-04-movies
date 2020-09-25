@@ -13,11 +13,11 @@ export default class MoviesPage extends Component {
   };
 
   componentDidMount() {
-    moviesApi.fetchMovieWithQuery("cat").then((movies) => {
-      this.setState({ movies })
-        .catch((error) => this.setState({ error }))
-        .finally(() => this.setState({ isLoader: false }));
-    });
+    moviesApi
+      .fetchMovieWithQuery("cat")
+      .then((movies) => this.setState({ movies }))
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ isLoader: false }));
   }
 
   componentDidUpdate() {}

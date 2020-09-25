@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
 import Loader from "react-loader-spinner";
-
 import moviesApi from "../../../services/moviesApi";
+
+import s from "./Cast.module.css";
 
 export default class Cast extends Component {
   static defaultProps = {
@@ -39,13 +40,13 @@ export default class Cast extends Component {
         )}
 
         {cast && (
-          <ul>
+          <ul className={s.castList}>
             {cast.map(({ id, name, profile_path, character }) => (
-              <li key={id}>
+              <li key={id} className={s.castItem}>
                 <img src={`${baseUrlImg}${profile_path}`} alt="" />
                 {!profile_path && <img src={imgUrl} alt={name} width="92" />}
-                <p>Name: {name}</p>
-                <div>Character: {character}</div>
+                <p className={s.castName}>Name: {name}</p>
+                <p>Character: {character}</p>
               </li>
             ))}
           </ul>
