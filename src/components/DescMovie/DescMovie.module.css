@@ -9,7 +9,23 @@
   }
 }
 
+.btnBack {
+  font-size: 16px;
+  border-radius: 10px;
+  margin: 20px 0 0;
+  padding: 5px 15px;
+  display: inline-block;
+
+  border: none;
+  background-color: rgb(42, 111, 177);
+  color: rgb(2, 2, 2);
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 10px;
+}
+
 .img {
+  display: block;
   width: 250px;
 }
 

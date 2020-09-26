@@ -2,7 +2,7 @@ import React from "react";
 
 import s from "./DescMovie.module.css";
 
-const DescMovie = ({ movie }) => {
+const DescMovie = ({ movie, handleGoBack }) => {
   const {
     title,
     poster_path,
@@ -16,7 +16,16 @@ const DescMovie = ({ movie }) => {
 
   return (
     <div className={s.descMovie}>
-      <img className={s.img} src={`${baseUrlImg}${poster_path}`} alt={title} />
+      <div>
+        <button type="button" className={s.btnBack} onClick={handleGoBack}>
+          Back to list
+        </button>
+        <img
+          className={s.img}
+          src={`${baseUrlImg}${poster_path}`}
+          alt={title}
+        />
+      </div>
       <div className={s.wrapperDetails}>
         <h2 className={(s.detailsTitle, s.mainTitle)}>
           {title} ({release_date})

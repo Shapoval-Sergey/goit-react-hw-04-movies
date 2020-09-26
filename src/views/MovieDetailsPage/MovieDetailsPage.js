@@ -1,14 +1,22 @@
-import React, { Component, Suspense } from "react";
+import React, { Component, Suspense, lazy } from "react";
 import { Route, NavLink } from "react-router-dom";
 
 import moviesApi from "../../services/moviesApi";
 import Loader from "react-loader-spinner";
-import Cast from "./Cast/Cast";
-import Reviews from "./Reviews/Reviews";
 import routes from "../../routes";
 import DescMovie from "../../components/DescMovie/DescMovie";
 
 import s from "./MovieDetailsPage.module.css";
+
+const AsyncCast = lazy(() =>
+  import("./Cast/Cast.js" /* webpackChunkName: "async-cast-component" */)
+);
+
+const AsyncReviews = lazy(() =>
+  import(
+    "./Reviews/Reviews.js" /* webpackChunkName: "async-reviews-component" */
+  )
+);
 
 export default class MovieDetailsPage extends Component {
   state = {
@@ -26,6 +34,16 @@ export default class MovieDetailsPage extends Component {
       .finally(() => this.setState({ isLoader: false }));
   }
 
+  handleGoToList = () => {
+    const { state } = this.props.location;
+
+    if (state && state.from) {
+      return this.props.history.push(state.from);
+    }
+
+    this.props.history.push(routes.movies);
+  };
+
   render() {
     const { isLoader, movie, error } = this.state;
     const { match } = this.props;
@@ -41,13 +59,14 @@ export default class MovieDetailsPage extends Component {
 
         {movie && (
           <>
-            <DescMovie movie={movie} />
+            <DescMovie movie={movie} handleGoBack={this.handleGoToList} />
             <hr />
             <NavLink
               className={s.link}
               activeClassName={s.activeLink}
               to={{
                 pathname: `${match.url}${routes.Reviews}`,
+                state: { from: this.props.location },
               }}
             >
               Reviews
@@ -58,17 +77,27 @@ export default class MovieDetailsPage extends Component {
               activeClassName={s.activeLink}
               to={{
                 pathname: `${match.url}${routes.Cast}`,
+                state: { from: this.props.location },
               }}
             >
               Cast
             </NavLink>
 
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div>
+                  <Loader type="Oval" color="#00BFFF" height={70} width={100} />
+                </div>
+              }
+            >
               <Route
                 path={`${match.path}${routes.Reviews}`}
-                component={Reviews}
+                component={AsyncReviews}
               />
-              <Route path={`${match.path}${routes.Cast}`} component={Cast} />
+              <Route
+                path={`${match.path}${routes.Cast}`}
+                component={AsyncCast}
+              />
             </Suspense>
           </>
         )}

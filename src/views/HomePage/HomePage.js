@@ -4,6 +4,8 @@ import Loader from "react-loader-spinner";
 import moviesApi from "../../services/moviesApi";
 import MoviesList from "../../components/MoviesList/MoviesList";
 
+import "../../index.css";
+
 export default class HomePage extends Component {
   state = {
     movies: [],
@@ -25,7 +27,7 @@ export default class HomePage extends Component {
 
     return (
       <>
-        <h2>Popular Films</h2>
+        <h2 className="titleHome">Popular Films</h2>
 
         {isLoader && (
           <div>
@@ -36,8 +38,6 @@ export default class HomePage extends Component {
         {error && <p>Whoops, something went wrong: {error.message}</p>}
 
         {movies && <MoviesList movies={movies} {...this.props} />}
-
-        <ul></ul>
       </>
     );
   }

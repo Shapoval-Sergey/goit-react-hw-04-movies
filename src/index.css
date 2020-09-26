@@ -47,3 +47,8 @@ p {
 .activeLink {
   color: palevioletred;
 }
+
+.titleHome {
+  margin-left: 40px;
+  text-transform: uppercase;
+}

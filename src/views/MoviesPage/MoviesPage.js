@@ -4,6 +4,7 @@ import Loader from "react-loader-spinner";
 
 import moviesApi from "../../services/moviesApi";
 import Searchbox from "../../components/Searchbox/Searchbox";
+import getQueryParams from "../../utils/getQueryParams";
 
 export default class MoviesPage extends Component {
   state = {
@@ -13,14 +14,39 @@ export default class MoviesPage extends Component {
   };
 
   componentDidMount() {
+    const { query } = getQueryParams(this.props.location.search);
+
+    if (query) {
+      this.setState({ isLoader: true });
+      this.fetchMovies(query);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { query: prevQuery } = getQueryParams(prevProps.location.search);
+    const { query: nextQuery } = getQueryParams(this.props.location.search);
+
+    if (nextQuery !== prevQuery) {
+      this.setState({ isLoader: true });
+      this.fetchMovies(nextQuery);
+    }
+  }
+
+  fetchMovies = (query) => {
     moviesApi
-      .fetchMovieWithQuery("cat")
+      .fetchMovieWithQuery(query)
       .then((movies) => this.setState({ movies }))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoader: false }));
-  }
+  };
 
-  componentDidUpdate() {}
+  handleChangeQuery = (query) => {
+    this.props.history.push({
+      // pathname: this.props.location.pathname, вариант когда не нужно location.state
+      ...this.props.location,
+      search: `query=${query}`,
+    });
+  };
 
   render() {
     const { movies, isLoader, error } = this.state;
