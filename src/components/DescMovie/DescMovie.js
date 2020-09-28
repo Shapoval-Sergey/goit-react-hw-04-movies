@@ -12,19 +12,13 @@ const DescMovie = ({ movie, handleGoBack }) => {
     release_date,
   } = movie;
 
-  const baseUrlImg = "https://image.tmdb.org/t/p/w300";
-
   return (
     <div className={s.descMovie}>
       <div>
         <button type="button" className={s.btnBack} onClick={handleGoBack}>
           Back to list
         </button>
-        <img
-          className={s.img}
-          src={`${baseUrlImg}${poster_path}`}
-          alt={title}
-        />
+        <img className={s.img} src={poster_path} alt={title} />
       </div>
       <div className={s.wrapperDetails}>
         <h2 className={(s.detailsTitle, s.mainTitle)}>

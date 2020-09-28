@@ -5,6 +5,7 @@ import moviesApi from "../../services/moviesApi";
 import Loader from "react-loader-spinner";
 import routes from "../../routes";
 import DescMovie from "../../components/DescMovie/DescMovie";
+import { formationUrlInOneMovie } from "../../helpers/formationURL";
 
 import s from "./MovieDetailsPage.module.css";
 
@@ -23,25 +24,20 @@ export default class MovieDetailsPage extends Component {
     movie: null,
     isLoader: false,
     error: null,
+    location: this.props.location.state.from,
   };
 
   componentDidMount() {
     this.setState({ isLoader: true });
     moviesApi
       .fetchMovieDetails(this.props.match.params.movieId)
-      .then((movie) => this.setState({ movie }))
+      .then((movie) => this.setState({ movie: formationUrlInOneMovie(movie) }))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoader: false }));
   }
 
   handleGoToList = () => {
-    const { state } = this.props.location;
-
-    if (state && state.from) {
-      return this.props.history.push(state.from);
-    }
-
-    this.props.history.push(routes.movies);
+    return this.props.history.push(this.state.location);
   };
 
   render() {

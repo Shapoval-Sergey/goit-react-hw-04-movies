@@ -24,14 +24,7 @@ export default class Reviews extends Component {
 
   handleShowReviews = (id) => {
     const { reviewId } = this.state;
-
-    if (reviewId !== id) {
-      return this.setState({ reviewId: id });
-    }
-
-    if (reviewId === id) {
-      return this.setState({ reviewId: "" });
-    }
+    return this.setState({ reviewId: reviewId === id ? "" : id });
   };
 
   render() {

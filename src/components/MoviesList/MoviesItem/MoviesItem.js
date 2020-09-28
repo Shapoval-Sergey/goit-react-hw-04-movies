@@ -6,7 +6,6 @@ import routes from "../../../routes";
 import s from "./MoviesItem.module.css";
 
 const MoviesItem = ({ id, poster_path, title, location }) => {
-  const baseUrlImg = "https://image.tmdb.org/t/p/w92";
   return (
     <li className={s.MoviesItem}>
       <Link
@@ -16,11 +15,7 @@ const MoviesItem = ({ id, poster_path, title, location }) => {
           state: { from: location },
         }}
       >
-        <img
-          className={s.ItemMovieImg}
-          src={`${baseUrlImg}${poster_path}`}
-          alt={title}
-        />
+        <img className={s.ItemMovieImg} src={poster_path} alt={title} />
         <h3 className={s.ItemMovieTitle}>{title}</h3>
       </Link>
     </li>

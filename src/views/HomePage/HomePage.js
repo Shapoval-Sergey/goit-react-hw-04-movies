@@ -3,6 +3,7 @@ import Loader from "react-loader-spinner";
 
 import moviesApi from "../../services/moviesApi";
 import MoviesList from "../../components/MoviesList/MoviesList";
+import { formationUrlInArrMovies } from "../../helpers/formationURL";
 
 import "../../index.css";
 
@@ -17,7 +18,9 @@ export default class HomePage extends Component {
     this.setState({ isLoader: true });
     moviesApi
       .fetchHomePageMovies()
-      .then((movies) => this.setState({ movies }))
+      .then((movies) =>
+        this.setState({ movies: formationUrlInArrMovies(movies) })
+      )
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoader: false }));
   }

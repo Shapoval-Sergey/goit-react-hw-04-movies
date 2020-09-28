@@ -2,15 +2,11 @@ import React, { Component } from "react";
 
 import Loader from "react-loader-spinner";
 import moviesApi from "../../../services/moviesApi";
+import { formationUrlInArrCast } from "../../../helpers/formationURL";
 
 import s from "./Cast.module.css";
 
 export default class Cast extends Component {
-  static defaultProps = {
-    imgUrl:
-      "https://anotherjavaduke.files.wordpress.com/2018/08/avataaars-2.png",
-  };
-
   state = {
     cast: [],
     isLoader: false,
@@ -21,15 +17,13 @@ export default class Cast extends Component {
     this.setState({ isLoader: true });
     moviesApi
       .fetchCast(this.props.match.params.movieId)
-      .then((cast) => this.setState({ cast }))
+      .then((cast) => this.setState({ cast: formationUrlInArrCast(cast) }))
       .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ isLoader: false }));
   }
 
   render() {
     const { isLoader, cast, error } = this.state;
-    const { imgUrl } = this.props;
-    const baseUrlImg = "https://image.tmdb.org/t/p/w92";
 
     return (
       <>
@@ -43,8 +37,7 @@ export default class Cast extends Component {
           <ul className={s.castList}>
             {cast.map(({ id, name, profile_path, character }) => (
               <li key={id} className={s.castItem}>
-                <img src={`${baseUrlImg}${profile_path}`} alt="" />
-                {!profile_path && <img src={imgUrl} alt={name} width="92" />}
+                <img src={profile_path} alt="" width="92" />
                 <p className={s.castName}>Name: {name}</p>
                 <p>Character: {character}</p>
               </li>

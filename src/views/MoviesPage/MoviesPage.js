@@ -68,6 +68,7 @@ export default class MoviesPage extends Component {
           <ul>
             {movies.map((movie) => (
               <li key={movie.id}>
+                {/* {console.log(this.props.location)} */}
                 <Link
                   to={{
                     pathname: `${match.url}/${movie.id}`,
